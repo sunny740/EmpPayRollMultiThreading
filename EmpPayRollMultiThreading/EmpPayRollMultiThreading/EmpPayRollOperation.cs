@@ -20,7 +20,23 @@ namespace EmpPayRollMultiThreading
             );
             Console.WriteLine(this.employeeDatalist.ToString());
         }
-        public void AddEmployeePayroll(EmployeeDetails employee)
+        public void AddEmpRollThread(List<EmployeeDetails> employeeDatalist)
+        {
+            employeeDatalist.ForEach(employeeData =>
+
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Employee being added: " + employeeData.Name);
+                    this.AddEmployeePayroll(employeeData);
+                    Console.WriteLine("Employee added: " + employeeData.Name);
+
+                });
+                thread.Start();
+            });
+            Console.WriteLine(this.employeeDatalist.Count);
+        }
+        public void AddEmpRoll(EmployeeDetails employee)
         {
             employeeDatalist.Add(employee);
         }
